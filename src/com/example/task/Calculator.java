@@ -1,11 +1,21 @@
 package com.example.task;
 
-public class Calculator {
-    public double calculateArea(Rectangle rectangle) {
-        return rectangle.getLength() * rectangle.getWidth();
+public final class Calculator {
+    private Calculator() {} // Запрещаем создание экземпляров
+
+    public static double calculateArea(Rectangle rectangle) {
+        return rectangle.calculateArea();
     }
 
-    public double calculatePerimeter(Rectangle rectangle) {
-        return 2 * (rectangle.getLength() + rectangle.getWidth());
+    public static double calculatePerimeter(Rectangle rectangle) {
+        return rectangle.calculatePerimeter();
+    }
+
+    public static double calculateDiagonal(Rectangle rectangle) {
+        return rectangle.calculateDiagonal();
+    }
+
+    public static double calculateAspectRatio(Rectangle rectangle) {
+        return rectangle.getLength() / rectangle.getWidth();
     }
 }

@@ -1,21 +1,54 @@
 package com.example.task;
+
+import java.util.Scanner;
+
 /*
 Постановка задачи:
-Написать программу для вычисления площади и периметра прямоугольника.
-Пользователь вводит длину и ширину, программа выводит результаты.
+Программа для работы с прямоугольниками:
+1. Расчет площади и периметра
+2. Валидация входных данных
+3. Сравнение прямоугольников
+4. Генерация случайных прямоугольников
 */
 public class Main {
     public static void main(String[] args) {
-        // Создаем объекты
-        Rectangle rectangle = new Rectangle(5, 10);
-        Calculator calculator = new Calculator();
-        RectanglePrinter printer = new RectanglePrinter(); // Новый объект
+        Scanner scanner = new Scanner(System.in);
+        RectanglePrinter printer = new RectanglePrinter();
+        RectangleGenerator generator = new RectangleGenerator();
 
-        // Выводим информацию с помощью RectanglePrinter
-        printer.printRectangleInfo(rectangle, calculator);
+        System.out.println("1. Создать прямоугольник вручную");
+        System.out.println("2. Сгенерировать случайный прямоугольник");
+        System.out.print("Выберите вариант: ");
 
-        // Можно добавить еще один прямоугольник для демонстрации
-        Rectangle anotherRectangle = new Rectangle(3, 7);
-        printer.printRectangleInfo(anotherRectangle, calculator);
+        int choice = scanner.nextInt();
+        Rectangle rectangle;
+
+        if (choice == 1) {
+            System.out.print("Введите длину: ");
+            double length = scanner.nextDouble();
+            System.out.print("Введите ширину: ");
+            double width = scanner.nextDouble();
+
+            try {
+                rectangle = new Rectangle(length, width);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                return;
+            }
+        } else {
+            rectangle = generator.generateRandomRectangle();
+            System.out.println("Сгенерирован прямоугольник:");
+        }
+
+        printer.printFullInfo(rectangle);
+
+        // Создаем второй прямоугольник для сравнения
+        Rectangle anotherRectangle = generator.generateRandomRectangle();
+        System.out.println("\nСравниваем с другим прямоугольником:");
+        printer.printFullInfo(anotherRectangle);
+
+        RectangleComparator comparator = new RectangleComparator();
+        int result = comparator.compare(rectangle, anotherRectangle);
+        printer.printComparisonResult(result);
     }
 }
